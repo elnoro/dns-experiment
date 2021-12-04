@@ -2,18 +2,25 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"github.com/elnoro/foxylock/m/v2/admin"
 	"github.com/elnoro/foxylock/m/v2/db"
 	"log"
 )
 
 func main() {
-	fmt.Println("test")
 
-	s := admin.NewHttpServer(db.NewInMemory(), "localhost:8081")
+	inMemoryDb := db.NewInMemory()
 
-	go log.Fatal(s.Run(context.Background()))
+	rs := admin.NewRedisLikeServer(inMemoryDb, ":6379", "testpass")
+	startServer(rs)
+	gs := admin.NewHttpServer(inMemoryDb, ":8081")
+	startServer(gs)
 
 	select {}
+}
+
+func startServer(s admin.DbServer) {
+	go func(s admin.DbServer) {
+		log.Fatal(s.Run(context.Background()))
+	}(s)
 }
