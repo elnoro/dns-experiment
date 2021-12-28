@@ -7,6 +7,7 @@ require (
 	github.com/coredns/coredns v1.8.6
 	github.com/coredns/example v0.0.0-20200925060636-a998e071a3a3
 	github.com/gin-gonic/gin v1.7.7
+	github.com/kelseyhightower/envconfig v1.4.0
 	github.com/miekg/dns v1.1.43
 	github.com/stretchr/testify v1.7.0
 	github.com/tidwall/redcon v1.4.2
