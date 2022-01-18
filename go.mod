@@ -7,10 +7,12 @@ require (
 	github.com/coredns/coredns v1.8.6
 	github.com/coredns/example v0.0.0-20200925060636-a998e071a3a3
 	github.com/gin-gonic/gin v1.7.7
+	github.com/go-playground/validator/v10 v10.4.1
 	github.com/kelseyhightower/envconfig v1.4.0
 	github.com/miekg/dns v1.1.43
 	github.com/stretchr/testify v1.7.0
 	github.com/tidwall/redcon v1.4.2
+	go.uber.org/zap v1.17.0
 )
 
 require (
@@ -24,7 +26,6 @@ require (
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/go-playground/locales v0.13.0 // indirect
 	github.com/go-playground/universal-translator v0.17.0 // indirect
-	github.com/go-playground/validator/v10 v10.4.1 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/grpc-ecosystem/grpc-opentracing v0.0.0-20180507213350-8e809c8a8645 // indirect
 	github.com/json-iterator/go v1.1.11 // indirect
@@ -42,6 +43,8 @@ require (
 	github.com/tidwall/btree v0.6.1 // indirect
 	github.com/tidwall/match v1.1.1 // indirect
 	github.com/ugorji/go/codec v1.1.7 // indirect
+	go.uber.org/atomic v1.7.0 // indirect
+	go.uber.org/multierr v1.6.0 // indirect
 	golang.org/x/crypto v0.0.0-20210513164829-c07d793c2f9a // indirect
 	golang.org/x/net v0.0.0-20210614182718-04defd469f4e // indirect
 	golang.org/x/sys v0.0.0-20210917161153-d61c044b1678 // indirect

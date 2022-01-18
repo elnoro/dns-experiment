@@ -32,7 +32,8 @@ func TestNewHttpServer(t *testing.T) {
 func startTestServer() (string, context.CancelFunc) {
 	ctx, cancel := context.WithCancel(context.Background())
 	address := "localhost:1234"
-	srv := NewHttpServer(db.NewInMemory(), address)
+	testDb, _ := db.NewInMemoryFromFile("")
+	srv := NewHttpServer(testDb, address)
 	go func(ctx context.Context, srv DbServer) {
 		_ = srv.Run(ctx)
 	}(ctx, srv)

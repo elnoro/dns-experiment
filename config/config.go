@@ -7,9 +7,10 @@ import (
 )
 
 type Config struct {
-	RedisAddr string `validate:"required" split_words:"true" default:":6379"`
-	RedisPass string `validate:"required" split_words:"true"`
+	RedisAddr string `split_words:"true" default:":6379"`
+	RedisPass string `split_words:"true"`
 	HttpAddr  string `split_words:"true"`
+	HostsFile string `split_words:"true"`
 }
 
 func LoadConfig() (*Config, error) {
