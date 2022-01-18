@@ -50,7 +50,7 @@ func (e FoxyLock) ServeDNS(ctx context.Context, w dns.ResponseWriter, r *dns.Msg
 	blocked, err := globalBlockedHostsList.Get(state.QName())
 	if err != nil {
 		// falling through to other plugins
-		log.Errorf("cannot access blocked hosts list, %w", err)
+		log.Errorf("cannot access blocked hosts list, %v", err)
 	} else if blocked {
 		a := new(dns.Msg)
 		a.SetReply(r)

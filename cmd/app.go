@@ -37,7 +37,7 @@ func (a App) Start(ctx context.Context) error {
 	a.log.Infof("Loading file: %s", a.config.HostsFile)
 	inMemoryDb, err := db.NewInMemoryFromFile(a.config.HostsFile)
 	if err != nil {
-		return fmt.Errorf("db init, %w", inMemoryDb)
+		return fmt.Errorf("db init, %w", err)
 	}
 
 	if a.config.RedisPass != "" {

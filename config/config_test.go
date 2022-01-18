@@ -17,11 +17,11 @@ func TestLoadConfig_ValidEnvs(t *testing.T) {
 	c, err := LoadConfig()
 
 	assert.NoError(t, err)
-	assert.Equal(t, *c, Config{":6379", "expected-password", ""})
+	assert.Equal(t, *c, Config{":6379", "expected-password", "", ""})
 }
 
 func TestLoadConfig_EmptyEnvs(t *testing.T) {
 	_, err := LoadConfig()
 
-	assert.Error(t, err)
+	assert.NoError(t, err)
 }
