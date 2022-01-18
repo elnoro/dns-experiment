@@ -2,33 +2,34 @@ package main
 
 import (
 	"context"
-	"github.com/elnoro/foxylock/m/v2/admin"
-	"github.com/elnoro/foxylock/m/v2/db"
-	coredns_integration "github.com/elnoro/foxylock/m/v2/dns/coredns-integration"
+	"github.com/elnoro/foxylock/m/v2/cmd"
 	"log"
+	"os"
+	"os/signal"
+	"syscall"
 )
 
 func main() {
-	inMemoryDb := db.NewInMemory()
-
-	rs := admin.NewRedisLikeServer(inMemoryDb, ":6379", "testpass")
-	startServer(rs)
-	gs := admin.NewHttpServer(inMemoryDb, ":8081")
-	startServer(gs)
-
-	err := coredns_integration.
-		NewCoreDns(inMemoryDb).
-		Start()
+	app, err := cmd.NewProduction()
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Print("Running...")
 
-	select {}
+	ctx, cancel := context.WithCancel(context.Background())
+	err = app.Start(ctx)
+	if err != nil {
+		cancel()
+		log.Fatal(err)
+	}
+
+	waitForExit(cancel)
 }
 
-func startServer(s admin.DbServer) {
-	go func(s admin.DbServer) {
-		log.Fatal(s.Run(context.Background()))
-	}(s)
+func waitForExit(cancel context.CancelFunc) {
+	sigs := make(chan os.Signal, 1)
+	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
+
+	<-sigs
+	cancel()
+	log.Println("Exiting...")
 }

@@ -1,12 +1,11 @@
 package db
 
-import "sync"
-
-type HostDb interface {
-	Save(host string) error
-	Delete(host string) error
-	Get(host string) (bool, error)
-}
+import (
+	"fmt"
+	"io/ioutil"
+	"strings"
+	"sync"
+)
 
 func (i *inMemoryDb) Save(host string) error {
 	i.mutex.Lock()
@@ -40,6 +39,28 @@ type inMemoryDb struct {
 	mutex sync.RWMutex
 }
 
-func NewInMemory() *inMemoryDb {
+func newEmptyInMemory() *inMemoryDb {
 	return &inMemoryDb{hosts: make(map[string]bool)}
+}
+
+func NewInMemoryFromFile(path string) (*inMemoryDb, error) {
+	db := newEmptyInMemory()
+	if path == "" {
+		return db, nil
+	}
+
+	f, err := ioutil.ReadFile(path)
+	if err != nil {
+		return nil, fmt.Errorf("reading file %s, %w", path, err)
+	}
+	hosts := strings.Split(string(f), "\n")
+
+	for _, host := range hosts {
+		err = db.Save(host)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	return db, nil
 }
